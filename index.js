@@ -2,7 +2,7 @@ import { clear } from 'console';
 import axios from 'axios';
 import express from 'express';
 import path from 'path';
-import {fileURLToPath} from 'url';
+import { fileURLToPath } from 'url';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 
@@ -19,13 +19,13 @@ app.use(express.static(__dirname + "/public"));
 app.use(express.json());
 
 app.set('view engine', 'ejs');
-app.set('views', path.join(__dirname, 'pages')); 
+app.set('views', path.join(__dirname, 'pages'));
 
 // Rutas
-
-app.get("/averageCategories", (req,res)=> res.sendFile(__dirname + "/pages/averageCategories.html"));
-app.get("/averageCourses", (req,res)=> res.sendFile(__dirname + "/pages/averageCourses.html"));
-app.get("/courses", (req,res)=> res.sendFile(__dirname + "/pages/course.html"));
+app.get("/", (req, res) => res.sendFile(__dirname + "/index.html"));
+app.get("/averageCategories", (req, res) => res.sendFile(__dirname + "/pages/averageCategories.html"));
+app.get("/averageCourses", (req, res) => res.sendFile(__dirname + "/pages/averageCourses.html"));
+app.get("/courses", (req, res) => res.sendFile(__dirname + "/pages/course.html"));
 
 const token = "Bearer 17xa7adwlycG4qrbRatBdCHW41xtl9jNyaBq4d45";
 const id = "62b182eea31d8d9863079f42";
@@ -88,7 +88,7 @@ async function fetchCourseData() {
                 courseIdsArray.push(course.id);
                 courNamesArray.push(course.title);
                 if (course.categories || course.categories.length !== 0 || course.title !== "") {
-                    coursesInfo.push( {curso: course.categories, id: course.id, forms: []});
+                    coursesInfo.push({ curso: course.categories, id: course.id, forms: [] });
                 }
 
                 courseCategoriesArray.push(course.categories);
@@ -117,7 +117,7 @@ async function fetchCourseData() {
             courses.forEach(course => {
                 course.categories.forEach(category => {
                     courseListCategories.push(category);
-                    courseListCategoriesWithNames.push({ [`${category}`]: course.title});
+                    courseListCategoriesWithNames.push({ [`${category}`]: course.title });
                 });
             });
 
@@ -239,7 +239,7 @@ async function recoverySurveyInfoByCategory() {
                     answers.forEach(answer => { // Iterate over the answers array
                         let nameCourse = filteredCourseList[i].title;
                         let answerFilter = answer.answer;
-                        courseList.push({ nameCourse,category, answerFilter });
+                        courseList.push({ nameCourse, category, answerFilter });
                         if (!answersObject[category]) {
                             answersObject[category] = []; // Create an empty array for the category if it doesn't exist
                         }
@@ -273,7 +273,7 @@ async function recoverySurveyInfoByCategory() {
     }
 
     console.log(answersObject);
-    
+
     //calcular la media general sumando las medias de cada categoria y dividiendo por el numero de categorias
     let sum = 0;
     for (let category in answersObject) {
@@ -288,7 +288,7 @@ async function recoverySurveyInfoByCategory() {
     //filtrar los cursos que tienen formularios, titulo y categorias
     coursesInfo = coursesInfo.filter(course => course.forms.length !== 0 && course.curso !== "" && course.id !== "");
 
-    app.get("/", (req, res) => {
+    app.get("/app", (req, res) => {
         res.render('start', { answersObject, courseList, courseCategoriesArray, coursesInfo });
     });
 }
