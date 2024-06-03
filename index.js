@@ -288,6 +288,9 @@ async function recoverySurveyInfoByCategory() {
     //filtrar los cursos que tienen formularios, titulo y categorias
     coursesInfo = coursesInfo.filter(course => course.forms.length !== 0 && course.curso !== "" && course.id !== "");
 
+
+    console.log(answersObject)
+
     app.get("/app", (req, res) => {
         res.render('start', { answersObject, courseList, courseCategoriesArray, coursesInfo });
     });
