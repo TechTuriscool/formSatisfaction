@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inicio</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div id="principalContainer">
+        <div class="header">
+            <h1>MEDIA GLOBAL</h1>
+            <div id="averageScore"></div>
+        </div>
+
+        <h1>MEDIA CATEGORÍAS</h1>
+        <div class="topContainer">
+        </div>
+        <div id="categoriesContainer">
+
+        </div>
+        <h1>BUSCADOR DE CURSOS</h1>
+        <div class="topContainer">
+            <div class="navbar">
+
+                <select id="categoryCards">
+                </select>
+                <div class="search">
+                    <input type="text" class="search-input" placeholder="Buscador de cursos">
+                    <button class="reset-search" onclick="resetSearchCourse()">Reset</button>
+                    <button class="search-btn" onclick="searchCourse()">Buscar</button>
+                </div>
+
+                <div class="menu-icon" onclick="toggleMenu()"> ⬇️ MOSTRAR CURSOS ⬇️</div>
+                <ul class="menu">
+                </ul>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <script src="averageGlobal.js"></script>
+    <script src="averageCategories.js"></script>
+    <script src="averageCourses.js"></script>
+    <script>
+        var variableDesdeEJS = JSON.parse('<%-JSON.stringify(answersObject)%>');
+        var variableDesdeEJS2 = JSON.parse('<%-JSON.stringify(courseList)%>');
+        var variableDesdeEJS3 = JSON.parse('<%-JSON.stringify(courseCategoriesArray)%>');
+        var variableDesdeEJS4 = JSON.parse('<%-JSON.stringify(coursesInfo)%>');
+
+        localStorage.setItem('answersObject', JSON.stringify(variableDesdeEJS));
+        localStorage.setItem('courseList', JSON.stringify(variableDesdeEJS2));
+        localStorage.setItem('courseCategoriesArray', JSON.stringify(variableDesdeEJS3));
+        localStorage.setItem('courNamesArray', JSON.stringify(variableDesdeEJS4));
+
+        console.log(variableDesdeEJS4);
+
+
+    </script>
+</body>
+
+</html>
