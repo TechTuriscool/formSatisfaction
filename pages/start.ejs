@@ -46,18 +46,18 @@
     <script src="averageCourses.js"></script>
     <script>
         var variableDesdeEJS = JSON.parse('<%-JSON.stringify(answersObject)%>');
-       // var variableDesdeEJS2 = JSON.parse('<%-JSON.stringify(courseList)%>');
-        //var variableDesdeEJS3 = JSON.parse('<%-JSON.stringify(courseCategoriesArray)%>');
+        var variableDesdeEJS2 = JSON.parse('<%-JSON.stringify(courseList)%>');
+        var variableDesdeEJS3 = JSON.parse('<%-JSON.stringify(courseCategoriesArray)%>');
         var variableDesdeEJS4 = JSON.parse('<%-JSON.stringify(coursesInfo)%>');
 
         localStorage.setItem('answersObject', JSON.stringify(variableDesdeEJS));
-        //localStorage.setItem('courseList', JSON.stringify(variableDesdeEJS2));
-        //localStorage.setItem('courseCategoriesArray', JSON.stringify(variableDesdeEJS3));
+        localStorage.setItem('courseList', JSON.stringify(variableDesdeEJS2));
+        localStorage.setItem('courseCategoriesArray', JSON.stringify(variableDesdeEJS3));
         localStorage.setItem('courNamesArray', JSON.stringify(variableDesdeEJS4));
 
         console.log(variableDesdeEJS4);
-        //console.log(variableDesdeEJS3);
-        //onsole.log(variableDesdeEJS2);
+        console.log(variableDesdeEJS3);
+        console.log(variableDesdeEJS2);
         console.log(variableDesdeEJS);
 
     </script>

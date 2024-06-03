@@ -289,7 +289,7 @@ async function recoverySurveyInfoByCategory() {
     coursesInfo = coursesInfo.filter(course => course.forms.length !== 0 && course.curso !== "" && course.id !== "");
 
     app.get("/app", (req, res) => {
-        res.render('start', { answersObject,  coursesInfo });
+        res.render('start', { answersObject, courseList, courseCategoriesArray, coursesInfo });
     });
 }
 
