@@ -215,6 +215,7 @@ h1 {
     width: 30%;
     background-color: rgb(117, 117, 117);
     padding: 20px;
+    border: solid 1px #ffffff;
 }
 
 #principalContainer {
