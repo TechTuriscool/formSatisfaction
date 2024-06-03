@@ -14,6 +14,11 @@ let deployCoursesActive = false;
 let optionDisabledifNotForm = false;
 let usersString = "";
 
+let url = new URL(window.location.href);
+let host = url.host;
+
+
+
 const requestOptions = {
     method: "GET",
     headers: {
@@ -162,7 +167,7 @@ async function recoverySurveyInfo(SurveyID) {
         const data = await response.json();
         localStorage.setItem("surveyInfo", JSON.stringify(data));
         // Navegar a /courses para mostrar la información
-        window.location.href = "http://localhost:3000/courses";
+        window.location.href = `http://${host}/courses`;
 
     } catch (error) {
         console.error("Error:", error);
