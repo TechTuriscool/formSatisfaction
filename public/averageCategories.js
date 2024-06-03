@@ -1,6 +1,7 @@
 // Recoger del localStorage el objeto con las respuestas
 let answersObject2 = JSON.parse(localStorage.getItem('answersObject'));
 console.log('Respuestas del localStorage: ');
+console.log(answersObject2);
 
 let categoriesContainer2 = document.getElementById('categoriesContainer');
 
