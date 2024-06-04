@@ -1,4 +1,3 @@
-import { clear } from 'console';
 import axios from 'axios';
 import express from 'express';
 import path from 'path';
