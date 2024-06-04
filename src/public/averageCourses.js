@@ -1,6 +1,5 @@
 const token = "Bearer 17xa7adwlycG4qrbRatBdCHW41xtl9jNyaBq4d45";
 const id = "62b182eea31d8d9863079f42";
-let arrayNamesForbidden = ["feet", "bienvenidos", "onboarding", "procedimientos", "taz", "alda"];
 let totalCourses = 0;
 let categories = [];
 let courseList = [];
@@ -13,6 +12,7 @@ let showAlumnosToggle = false;
 let deployCoursesActive = false;
 let optionDisabledifNotForm = false;
 let usersString = "";
+let recoverySurveyInfoPreData = [];
 
 let url = new URL(window.location.href);
 let host = url.host;
@@ -67,17 +67,30 @@ async function fetchCourseData() {
             }
             const data = await response.json();
             data.data.forEach(course => {
-                if (!arrayNamesForbidden.some(word => course.title.toLowerCase().includes(word.toLowerCase()))) {
-                    courseList.push(course);
-                }
+            courseList.push(course);
+
             });
         }
+
+        console.log(courseList);
         setLoadingMenuIcon(loading = false);
         courseListIds = courseList.map(course => course.id);
         courseListCategories = courseList.map(course => course.categories);
-        categories = courseListCategories.flat();
-        categories = [...new Set(categories)];
+        
+        // Recoger todas las categorias desde el localStorage
+        let categoriesFromLocalStorage = localStorage.getItem('answersObject');
+
+        // Recorrer todas las keys del objeto y añadir las categorias al array
+        if (categoriesFromLocalStorage) {
+            let categoriesObject = JSON.parse(categoriesFromLocalStorage);
+            for (let key in categoriesObject) {
+                categories.push(key);
+            }
+        }
+
         courseList.sort((a, b) => a.title.localeCompare(b.title));
+        recoverySurveyInfoPre();
+
     } catch (error) {
         console.error("Error:", error);
     }
@@ -172,6 +185,50 @@ async function recoverySurveyInfo(SurveyID) {
     } catch (error) {
         console.error("Error:", error);
     }
+}
+
+async function recoverySurveyInfoPre() {
+
+    let data = JSON.parse(localStorage.getItem("courNamesArray"));
+
+    for (let i = 0; i < data.length; i++) {
+        let notas = [];
+        let notasFinales = [];
+        let notamedia = 0;
+
+        console.log(data[i].forms);
+        try {
+            const response = await fetch(
+                `https://academy.turiscool.com/admin/api/v2/assessments/${data[i].forms[0]}/responses`,
+                requestOptions
+            );
+
+            const data2 = await response.json();
+            console.log(data2);
+            
+            if (data2.data) {
+                data2.data.forEach(item => {
+                    item.answers.slice(0, -1).forEach(answer => {
+                        notas.push(answer.answer);
+                    });
+                });
+        
+                notasFinales = notas.map(nota => nota.charAt(0));
+                notamedia = notasFinales.reduce((acc, nota) => acc + parseInt(nota), 0) / notasFinales.length;
+                notamedia = notamedia.toFixed(2);
+    
+    
+                recoverySurveyInfoPreData.push({ id: data[i].id , media: notamedia });
+    
+            }
+
+        } catch (error) {
+            console.error("Error:", error);
+        }
+    }
+    localStorage.setItem("recoverySurveyInfoPreData", JSON.stringify(recoverySurveyInfoPreData));
+    console.log(recoverySurveyInfoPreData);
+
 }
 
 function recoverySurveyInfoFromLocalStorage() {
@@ -418,7 +475,13 @@ function closeMenu() {
 function populateMenu(courses) {
     let menu = document.querySelector('.menu');
     menu.innerHTML = '';
+    let recoverySurveyInfoPreData2 = JSON.parse(localStorage.getItem("recoverySurveyInfoPreData"));
     courses.forEach(course => {
+        // Recorrer todos los cursos, si una ID del curso coincide con recoverySurveyInfoPreData, añadir la nota media
+        let notaMedia = recoverySurveyInfoPreData2.find(item => item.id === course.id);
+        if (notaMedia) {
+            course.title = `${course.title} - ${notaMedia.media}`;
+        }
         let listItem = document.createElement('li');
         listItem.textContent = course.title;
         listItem.id = course.id;
