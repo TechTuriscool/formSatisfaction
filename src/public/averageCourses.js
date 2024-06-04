@@ -454,7 +454,7 @@ function populateMenu(courses) {
         } else {
             listItem.style.backgroundColor = "white";
         }
-
+        listItem.style.borderRadius = "10px";
         listItem.textContent = courseTitle;
         listItem.id = course.id;
         listItem.style.cursor = 'pointer';

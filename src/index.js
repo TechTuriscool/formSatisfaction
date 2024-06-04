@@ -20,7 +20,6 @@ app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'pages'));
 
 // Rutas
-app.get("/", (req, res) => res.sendFile(__dirname + "/index.html"));
 app.get("/averageCategories", (req, res) => res.sendFile(__dirname + "/pages/averageCategories.html"));
 app.get("/averageCourses", (req, res) => res.sendFile(__dirname + "/pages/averageCourses.html"));
 app.get("/courses", (req, res) => res.sendFile(__dirname + "/pages/course.html"));
@@ -294,7 +293,7 @@ async function recoverySurveyInfoByCategory() {
     recoverySurveyInfoPre(coursesInfo);
 
     app.get("/app", (req, res) => {
-        res.render('start', { answersObject, courseList, courseCategoriesArray, coursesInfo, recoverySurveyInfoPreData });
+        res.render('index', { answersObject, courseList, courseCategoriesArray, coursesInfo, recoverySurveyInfoPreData });
     });
 }
 
@@ -320,19 +319,19 @@ async function recoverySurveyInfoPre(data) {
 
             const data2 = await response.data;
             console.log(data2);
-            
+
             if (data2.data) {
                 data2.data.forEach(item => {
                     item.answers.slice(0, -1).forEach(answer => {
                         notas.push(answer.answer);
                     });
                 });
-        
+
                 notasFinales = notas.map(nota => nota.charAt(0));
                 notamedia = notasFinales.reduce((acc, nota) => acc + parseInt(nota), 0) / notasFinales.length;
                 notamedia = notamedia.toFixed(2);
-                recoverySurveyInfoPreData.push({ id: data[i].id , media: notamedia });
-    
+                recoverySurveyInfoPreData.push({ id: data[i].id, media: notamedia });
+
             }
 
         } catch (error) {
