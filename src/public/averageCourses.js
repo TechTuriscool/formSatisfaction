@@ -66,7 +66,7 @@ async function fetchCourseData() {
             }
             const data = await response.json();
             data.data.forEach(course => {
-            courseList.push(course);
+                courseList.push(course);
 
             });
         }
@@ -75,7 +75,7 @@ async function fetchCourseData() {
         setLoadingMenuIcon(loading = false);
         courseListIds = courseList.map(course => course.id);
         courseListCategories = courseList.map(course => course.categories);
-        
+
         // Recoger todas las categorias desde el localStorage
         let categoriesFromLocalStorage = localStorage.getItem('answersObject');
 
@@ -431,21 +431,40 @@ function populateMenu(courses) {
     let menu = document.querySelector('.menu');
     menu.innerHTML = '';
     let recoverySurveyInfoPreData2 = JSON.parse(localStorage.getItem("recoverySurveyInfoPreData"));
+
     courses.forEach(course => {
-        // Recorrer todos los cursos, si una ID del curso coincide con recoverySurveyInfoPreData, añadir la nota media
-        let notaMedia = recoverySurveyInfoPreData2.find(item => item.id === course.id);
-        if (notaMedia) {
-            course.title = `${course.title} - ${notaMedia.media}`;
-        }
         let listItem = document.createElement('li');
-        listItem.textContent = course.title;
+        let courseTitle = course.title;
+        let notaMedia = recoverySurveyInfoPreData2.find(item => item.id === course.id);
+
+        if (notaMedia) {
+            // Verificar si la nota media ya está en el título para evitar duplicados
+            if (!courseTitle.includes(' - ')) {
+                courseTitle += ` - ${notaMedia.media}`;
+            }
+
+            // Cambiar el background color según la nota media
+            if (notaMedia.media >= 4) {
+                listItem.style.backgroundColor = "lightgreen";
+            } else if (notaMedia.media >= 2 && notaMedia.media < 4) {
+                listItem.style.backgroundColor = "lightyellow";
+            } else if (notaMedia.media < 2) {
+                listItem.style.backgroundColor = "lightred";
+            }
+        } else {
+            listItem.style.backgroundColor = "white";
+        }
+
+        listItem.textContent = courseTitle;
         listItem.id = course.id;
         listItem.style.cursor = 'pointer';
-        listItem.addEventListener('click', () => fetchCourseContent(course.id, course.title));
+        listItem.addEventListener('click', () => fetchCourseContent(course.id, courseTitle));
         menu.appendChild(listItem);
     });
+
     menu.classList.add('active');
 }
+
 
 function searchCourse() {
     let searchInput = document.querySelector('.search-input');

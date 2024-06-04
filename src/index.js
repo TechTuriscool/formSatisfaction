@@ -331,8 +331,6 @@ async function recoverySurveyInfoPre(data) {
                 notasFinales = notas.map(nota => nota.charAt(0));
                 notamedia = notasFinales.reduce((acc, nota) => acc + parseInt(nota), 0) / notasFinales.length;
                 notamedia = notamedia.toFixed(2);
-    
-    
                 recoverySurveyInfoPreData.push({ id: data[i].id , media: notamedia });
     
             }
