@@ -42,6 +42,8 @@ let arrayOfCoursesWithForms = [];
 let surveyIds = [];
 let coursesWithForms = [];
 let generalAverage = 10;
+let recoverySurveyInfoPreData = [];
+
 
 const axiosInstance = axios.create({
     baseURL: 'https://academy.turiscool.com/admin/api/v2',
@@ -289,8 +291,10 @@ async function recoverySurveyInfoByCategory() {
 
     console.log(answersObject)
 
+    recoverySurveyInfoPre(coursesInfo);
+
     app.get("/app", (req, res) => {
-        res.render('start', { answersObject, courseList, courseCategoriesArray, coursesInfo });
+        res.render('start', { answersObject, courseList, courseCategoriesArray, coursesInfo, recoverySurveyInfoPreData });
     });
 }
 
@@ -299,6 +303,44 @@ async function start() {
     await filterCoursesByCategory();
     const categoryUnitsMap = createObjectWithCategoriesAndUnitIds();
     await recoverySurveyInfoByCategory();
+
+}
+
+async function recoverySurveyInfoPre(data) {
+
+
+    for (let i = 0; i < data.length; i++) {
+        let notas = [];
+        let notasFinales = [];
+        let notamedia = 0;
+
+        console.log(data[i].forms);
+        try {
+            const response = await axiosInstance.get(`/assessments/${data[i].forms[0]}/responses`);
+
+            const data2 = await response.data;
+            console.log(data2);
+            
+            if (data2.data) {
+                data2.data.forEach(item => {
+                    item.answers.slice(0, -1).forEach(answer => {
+                        notas.push(answer.answer);
+                    });
+                });
+        
+                notasFinales = notas.map(nota => nota.charAt(0));
+                notamedia = notasFinales.reduce((acc, nota) => acc + parseInt(nota), 0) / notasFinales.length;
+                notamedia = notamedia.toFixed(2);
+    
+    
+                recoverySurveyInfoPreData.push({ id: data[i].id , media: notamedia });
+    
+            }
+
+        } catch (error) {
+            console.error("Error:", error);
+        }
+    }
 
 }
 

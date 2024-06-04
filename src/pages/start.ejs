@@ -49,13 +49,15 @@
         var variableDesdeEJS2 = JSON.parse('<%-JSON.stringify(courseList)%>');
         var variableDesdeEJS3 = JSON.parse('<%-JSON.stringify(courseCategoriesArray)%>');
         var variableDesdeEJS4 = JSON.parse('<%-JSON.stringify(coursesInfo)%>');
+        var variableDesdeEJS5 = JSON.parse('<%-JSON.stringify(recoverySurveyInfoPreData)%>');
 
         localStorage.setItem('answersObject', JSON.stringify(variableDesdeEJS));
         localStorage.setItem('courseList', JSON.stringify(variableDesdeEJS2));
         localStorage.setItem('courseCategoriesArray', JSON.stringify(variableDesdeEJS3));
         localStorage.setItem('courNamesArray', JSON.stringify(variableDesdeEJS4));
+        localStorage.setItem('recoverySurveyInfoPreData', JSON.stringify(variableDesdeEJS5));
 
-        console.log(variableDesdeEJS4);
+        console.log(variableDesdeEJS5);
 
     </script>
 </body>

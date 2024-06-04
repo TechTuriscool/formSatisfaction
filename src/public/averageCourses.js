@@ -12,7 +12,6 @@ let showAlumnosToggle = false;
 let deployCoursesActive = false;
 let optionDisabledifNotForm = false;
 let usersString = "";
-let recoverySurveyInfoPreData = [];
 
 let url = new URL(window.location.href);
 let host = url.host;
@@ -89,7 +88,6 @@ async function fetchCourseData() {
         }
 
         courseList.sort((a, b) => a.title.localeCompare(b.title));
-        recoverySurveyInfoPre();
 
     } catch (error) {
         console.error("Error:", error);
@@ -187,49 +185,6 @@ async function recoverySurveyInfo(SurveyID) {
     }
 }
 
-async function recoverySurveyInfoPre() {
-
-    let data = JSON.parse(localStorage.getItem("courNamesArray"));
-
-    for (let i = 0; i < data.length; i++) {
-        let notas = [];
-        let notasFinales = [];
-        let notamedia = 0;
-
-        console.log(data[i].forms);
-        try {
-            const response = await fetch(
-                `https://academy.turiscool.com/admin/api/v2/assessments/${data[i].forms[0]}/responses`,
-                requestOptions
-            );
-
-            const data2 = await response.json();
-            console.log(data2);
-            
-            if (data2.data) {
-                data2.data.forEach(item => {
-                    item.answers.slice(0, -1).forEach(answer => {
-                        notas.push(answer.answer);
-                    });
-                });
-        
-                notasFinales = notas.map(nota => nota.charAt(0));
-                notamedia = notasFinales.reduce((acc, nota) => acc + parseInt(nota), 0) / notasFinales.length;
-                notamedia = notamedia.toFixed(2);
-    
-    
-                recoverySurveyInfoPreData.push({ id: data[i].id , media: notamedia });
-    
-            }
-
-        } catch (error) {
-            console.error("Error:", error);
-        }
-    }
-    localStorage.setItem("recoverySurveyInfoPreData", JSON.stringify(recoverySurveyInfoPreData));
-    console.log(recoverySurveyInfoPreData);
-
-}
 
 function recoverySurveyInfoFromLocalStorage() {
     let opinionDiv = document.getElementById("opinionContainer");
