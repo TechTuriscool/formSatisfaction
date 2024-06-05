@@ -4,11 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "docker:stop": "docker container stop npm_d || true",
-    "docker:remove": "docker container rm npm_d || true",
-    "docker:build": "docker build -t npm_docker .",
-    "docker:run": "docker run -p 4005:4005 -d -v %cd%:/usr/src/app --name npm_d npm_docker",
-    "docker:run:dev": "npm-run-all docker:*"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "nodemon src/index.js",
+    "start": "node src/index.js"
   },
   "author": "",
   "license": "ISC",
