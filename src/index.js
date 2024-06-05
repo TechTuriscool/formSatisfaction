@@ -340,11 +340,11 @@ async function recoverySurveyInfoPre(data) {
     }
 
 }
-    start();
+start();
 
-cron.schedule('0 0 0 * * *', () => {
-    start();
-  }, {
-    scheduled: true,
-    timezone: "Europe/Madrid"
-  });
+// cron.schedule('0 0 0 * * *', () => {
+//     start();
+//   }, {
+//     scheduled: true,
+//     timezone: "Europe/Madrid"
+//   });
