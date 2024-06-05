@@ -130,6 +130,7 @@ async function fetchCourseData() {
         console.error('Error:', error);
     }
 }
+//commit to push!
 
 async function fetchCourseContent(actualCourseId, courseObj) {
     console.log("entra")
