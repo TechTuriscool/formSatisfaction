@@ -80,7 +80,7 @@ body {
 
 .menu li:hover {
     background-color: #05BFAD;
-    color: white
+    color: #222222
         /* Cambia el color de fondo al pasar el ratón por encima */
 }
 
@@ -161,7 +161,7 @@ body {
 
 .header {
     display: flex;
-    background-color: #e0e0e0;
+
 }
 
 .header h1 {
@@ -218,23 +218,28 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    flex-wrap: wrap;
-    margin-top: 100px;
-    margin-bottom: 100px;
-    border-radius: 20px;
-    width: 80vw;
-    padding: 20px;
-    background-color: #e0e0e0;
+    background-color: white;
+    width: 100vw;
+
 }
 
 #categoriesContainer {
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(6, 1fr);
     grid-gap: 20px;
     padding: 20px;
-    background-color: #e0e0e0;
+}
 
-
+.desplegableCategorias {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 60vw;
+    padding: 20px;
+    background-color: lightgray;
+    /* Añadir color de fondo temporal */
+    border: 2px solid red;
+    /* Añadir borde para visibilidad */
 }
 
 .categoryContainer {

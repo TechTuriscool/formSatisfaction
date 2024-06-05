@@ -1,3 +1,4 @@
+import cron from 'node-cron';
 import axios from 'axios';
 import express from 'express';
 import path from 'path';
@@ -339,5 +340,11 @@ async function recoverySurveyInfoPre(data) {
     }
 
 }
+    start();
 
-start();
+cron.schedule('0 0 0 * * *', () => {
+    start();
+  }, {
+    scheduled: true,
+    timezone: "Europe/Madrid"
+  });
