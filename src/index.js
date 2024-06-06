@@ -37,7 +37,6 @@ let courseCategoriesArray = [];
 let courseIdsArray = [];
 let filteredCourseList = [];
 let courseListCategories = [];
-let arrayOfCoursesWithForms = [];
 let surveyIds = [];
 let coursesWithForms = [];
 let generalAverage = 10;
@@ -133,7 +132,6 @@ async function fetchCourseData() {
 //commit to push!
 
 async function fetchCourseContent(actualCourseId, courseObj) {
-    console.log("entra")
     let hasAForm = false;
     try {
         const response = await axiosInstance.get(`/courses/${actualCourseId}/contents`);
@@ -224,7 +222,6 @@ async function recoverySurveyInfo() {
 
 //funcion para recorrer filteredCourseList y por cada categoria hacer una llamada a revocerySurveyInfo
 async function recoverySurveyInfoByCategory() {
-    console.log("entra")
     for (let i = 0; i < filteredCourseList.length; i++) {
         let category = Object.keys(filteredCourseList[i])[0];
         //recorrer el array de unitIds
@@ -283,13 +280,11 @@ async function recoverySurveyInfoByCategory() {
     generalAverage = Math.round(generalAverage * 100) / 100;
     console.log("generalAverage", generalAverage);
 
-    console.log(coursesInfo)
 
     //filtrar los cursos que tienen formularios, titulo y categorias
     coursesInfo = coursesInfo.filter(course => course.forms.length !== 0 && course.curso !== "" && course.id !== "");
 
 
-    console.log(answersObject)
 
     recoverySurveyInfoPre(coursesInfo);
 
@@ -301,20 +296,18 @@ async function recoverySurveyInfoByCategory() {
 async function start() {
     await fetchCourseMeta();
     await filterCoursesByCategory();
-    const categoryUnitsMap = createObjectWithCategoriesAndUnitIds();
     await recoverySurveyInfoByCategory();
 
 }
 
 async function recoverySurveyInfoPre(data) {
-
-
     for (let i = 0; i < data.length; i++) {
+        await new Promise(resolve => setTimeout(resolve, 1000));  // Añadir un retraso de 1 segundo entre las llamadas
+
         let notas = [];
         let notasFinales = [];
         let notamedia = 0;
 
-        console.log(data[i].forms);
         try {
             const response = await axiosInstance.get(`/assessments/${data[i].forms[0]}/responses`);
 
@@ -339,13 +332,13 @@ async function recoverySurveyInfoPre(data) {
             console.error("Error:", error);
         }
     }
-
 }
+
 start();
 
 cron.schedule('0 0 0 * * *', () => {
     start();
-  }, {
+}, {
     scheduled: true,
     timezone: "Europe/Madrid"
-  });
+});
