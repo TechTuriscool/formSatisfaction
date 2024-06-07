@@ -37,6 +37,7 @@ let courseCategoriesArray = [];
 let courseIdsArray = [];
 let filteredCourseList = [];
 let courseListCategories = [];
+let arrayOfCoursesWithForms = [];
 let surveyIds = [];
 let coursesWithForms = [];
 let generalAverage = 10;
@@ -58,7 +59,7 @@ async function fetchCourseMeta() {
         totalCourses = response.data.meta.totalPages;
         await fetchCourseData();
     } catch (error) {
-        console.error('Error:', error);
+
     }
 }
 
@@ -68,7 +69,6 @@ async function filterCoursesWithForms() {
         actualCourseId = courseData[i].id;
         await fetchCourseContent(actualCourseId, courseData[i]);
     }
-    console.log("coursesWithForms", coursesWithForms);
 }
 
 async function fetchCourseData() {
@@ -126,12 +126,12 @@ async function fetchCourseData() {
 
         await filterCoursesWithForms();
     } catch (error) {
-        console.error('Error:', error);
+        ('Error:', error);
     }
 }
-//commit to push!
 
 async function fetchCourseContent(actualCourseId, courseObj) {
+    console.log("entra")
     let hasAForm = false;
     try {
         const response = await axiosInstance.get(`/courses/${actualCourseId}/contents`);
@@ -166,7 +166,7 @@ async function fetchCourseContent(actualCourseId, courseObj) {
             coursesWithForms.push(courseObj);
         }
     } catch (error) {
-        console.error('Error:', error);
+        ('Error:', error);
     }
 }
 
@@ -216,12 +216,13 @@ async function recoverySurveyInfo() {
         });
     } catch (error) {
         // Mostrar solo la palabra "error"
-        console.error('Error:', error);
+        ('Error:', error);
     }
 }
 
 //funcion para recorrer filteredCourseList y por cada categoria hacer una llamada a revocerySurveyInfo
 async function recoverySurveyInfoByCategory() {
+    console.log("entra")
     for (let i = 0; i < filteredCourseList.length; i++) {
         let category = Object.keys(filteredCourseList[i])[0];
         //recorrer el array de unitIds
@@ -264,12 +265,16 @@ async function recoverySurveyInfoByCategory() {
         // Convert values to numbers and calculate the average
         let sum = answersFiltered.reduce((acc, val) => acc + Number(val), 0);
         let average = sum / answersFiltered.length;
+        //si la media es NaN or null, convertirlo a 5
+        if (isNaN(average) || average === null) {
+            average = 5;
+        }
         answersObject[category] = average;
         //redondeado a 2 decimales
         answersObject[category] = Math.round(average * 100) / 100;
     }
 
-    console.log(answersObject);
+    console.log("este", answersObject);
 
     //calcular la media general sumando las medias de cada categoria y dividiendo por el numero de categorias
     let sum = 0;
@@ -278,13 +283,19 @@ async function recoverySurveyInfoByCategory() {
     }
     generalAverage = sum / Object.keys(answersObject).length;
     generalAverage = Math.round(generalAverage * 100) / 100;
+    //si la media es NaN or null, convertirlo a 5
+    if (isNaN(generalAverage) || generalAverage === null) {
+        generalAverage = 5;
+    }
     console.log("generalAverage", generalAverage);
 
+    console.log("aquel", coursesInfo)
 
     //filtrar los cursos que tienen formularios, titulo y categorias
     coursesInfo = coursesInfo.filter(course => course.forms.length !== 0 && course.curso !== "" && course.id !== "");
 
 
+    console.log(answersObject)
 
     recoverySurveyInfoPre(coursesInfo);
 
@@ -296,28 +307,39 @@ async function recoverySurveyInfoByCategory() {
 async function start() {
     await fetchCourseMeta();
     await filterCoursesByCategory();
+    const categoryUnitsMap = createObjectWithCategoriesAndUnitIds();
     await recoverySurveyInfoByCategory();
 
 }
 
 async function recoverySurveyInfoPre(data) {
-    for (let i = 0; i < data.length; i++) {
-        await new Promise(resolve => setTimeout(resolve, 1000));  // Añadir un retraso de 1 segundo entre las llamadas
 
+
+    for (let i = 0; i < data.length; i++) {
         let notas = [];
         let notasFinales = [];
         let notamedia = 0;
 
+        console.log("hola", data[i].forms);
         try {
             const response = await axiosInstance.get(`/assessments/${data[i].forms[0]}/responses`);
 
             const data2 = await response.data;
-            console.log(data2);
+            console.log("data2", data2);
 
             if (data2.data) {
                 data2.data.forEach(item => {
                     item.answers.slice(0, -1).forEach(answer => {
-                        notas.push(answer.answer);
+                        //si la no es un numero entre 0 y 5 no pushear
+
+                        if (answer.answer >= 0 && answer.answer <= 5) {
+                            notas.push(answer.answer);
+                        }
+                        else {
+                            notas.push("5");
+                        }
+
+
                     });
                 });
 
@@ -329,16 +351,17 @@ async function recoverySurveyInfoPre(data) {
             }
 
         } catch (error) {
-            console.error("Error:", error);
+            ("Error:", error);
         }
     }
-}
+    console.log("fin")
 
+}
 start();
 
-cron.schedule('0 0 0 * * *', () => {
-    start();
-}, {
-    scheduled: true,
-    timezone: "Europe/Madrid"
-});
+// cron.schedule('0 0 0 * * *', () => {
+//     start();
+//   }, {
+//     scheduled: true,
+//     timezone: "Europe/Madrid"
+//   });

@@ -17,6 +17,8 @@ if (answersObject2 && categoriesContainer2) {
 
         let categoryScore = document.createElement('h1');
         categoryScore.innerHTML = answersObject2[key].toFixed(2);
+        //si es NaN o null, convertirlo a 5
+        
         categoryContainer.appendChild(categoryScore);
 
         if (categoryScore.innerHTML >= 0 && categoryScore.innerHTML <= 3) {

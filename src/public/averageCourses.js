@@ -50,7 +50,7 @@ async function fetchCourseMeta() {
         totalCourses = data.meta.totalPages;
         await fetchCourseData();
     } catch (error) {
-        console.error("Error:", error);
+        ("Error:", error);
     }
 }
 
@@ -90,7 +90,7 @@ async function fetchCourseData() {
         courseList.sort((a, b) => a.title.localeCompare(b.title));
 
     } catch (error) {
-        console.error("Error:", error);
+        ("Error:", error);
     }
 }
 
@@ -116,7 +116,7 @@ async function fetchCourseContent(courseId, courseTitle) {
         }
         await checkIfCourseHasForm(courseId);
     } catch (error) {
-        console.error("Error:", error);
+        ("Error:", error);
     }
 }
 
@@ -149,7 +149,7 @@ async function checkIfCourseHasForm(courseId) {
             alert("Este curso no tiene formularios");
         }
     } catch (error) {
-        console.error("Error:", error);
+        ("Error:", error);
     }
 }
 
@@ -181,7 +181,7 @@ async function recoverySurveyInfo(SurveyID) {
         window.location.href = `http://${host}/courses`;
 
     } catch (error) {
-        console.error("Error:", error);
+        ("Error:", error);
     }
 }
 
@@ -514,7 +514,7 @@ async function getAllCourseIds() {
         const courseIds = data.data.map(course => course.id);
         return courseIds;
     } catch (error) {
-        console.error("Error:", error);
+        ("Error:", error);
     }
 }
 
