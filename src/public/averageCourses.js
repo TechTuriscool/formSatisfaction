@@ -432,6 +432,11 @@ function populateMenu(courses) {
     menu.innerHTML = '';
     let recoverySurveyInfoPreData2 = JSON.parse(localStorage.getItem("recoverySurveyInfoPreData"));
 
+    console.log("courses");
+    console.log(courses);
+    console.log("recoverySurveyInfoPreData2");
+    console.log(recoverySurveyInfoPreData2);
+
     courses.forEach(course => {
         let listItem = document.createElement('li');
         let courseTitle = course.title;
