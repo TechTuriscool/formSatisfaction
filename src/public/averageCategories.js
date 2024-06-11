@@ -4,7 +4,7 @@ console.log('Respuestas del localStorage: ');
 console.log(answersObject2);
 
 let categoriesContainer2 = document.getElementById('categoriesContainer');
-
+let imgLoading2 = document.getElementById('loading2');
 if (answersObject2 && categoriesContainer2) {
     // Pasar por cada categoría
     for (let key in answersObject2) {
@@ -19,6 +19,7 @@ if (answersObject2 && categoriesContainer2) {
         categoryScore.innerHTML = answersObject2[key].toFixed(2);
         //si es NaN o null, convertirlo a 5
         
+
         categoryContainer.appendChild(categoryScore);
 
         if (categoryScore.innerHTML >= 0 && categoryScore.innerHTML <= 3) {
@@ -33,6 +34,8 @@ if (answersObject2 && categoriesContainer2) {
             categoryContainer.style.backgroundColor = '#8BE68B';
             categoryContainer.style.color = '#012E1F';
         }
+
+        imgLoading2.style.display = 'none';
 
         categoriesContainer2.appendChild(categoryContainer);
     }

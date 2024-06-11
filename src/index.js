@@ -222,7 +222,7 @@ async function recoverySurveyInfo() {
 
 //funcion para recorrer filteredCourseList y por cada categoria hacer una llamada a revocerySurveyInfo
 async function recoverySurveyInfoByCategory() {
-    console.log("entra")
+    //console.log("entra")
     for (let i = 0; i < filteredCourseList.length; i++) {
         let category = Object.keys(filteredCourseList[i])[0];
         //recorrer el array de unitIds
@@ -274,7 +274,7 @@ async function recoverySurveyInfoByCategory() {
         answersObject[category] = Math.round(average * 100) / 100;
     }
 
-    console.log("este", answersObject);
+    //console.log("este", answersObject);
 
     //calcular la media general sumando las medias de cada categoria y dividiendo por el numero de categorias
     let sum = 0;
@@ -287,14 +287,15 @@ async function recoverySurveyInfoByCategory() {
     if (isNaN(generalAverage) || generalAverage === null) {
         generalAverage = 5;
     }
-    console.log("generalAverage", generalAverage);
+    //console.log("generalAverage", generalAverage);
 
-    console.log("aquel", coursesInfo)
+    //console.log("aquel", coursesInfo)
 
     //filtrar los cursos que tienen formularios, titulo y categorias
     coursesInfo = coursesInfo.filter(course => course.forms.length !== 0 && course.curso !== "" && course.id !== "");
 
 
+    console.log("Answer Object")
     console.log(answersObject)
 
     recoverySurveyInfoPre(coursesInfo);
@@ -326,14 +327,16 @@ async function recoverySurveyInfoPre(data) {
             const response = await axiosInstance.get(`/assessments/${data[i].forms[0]}/responses`);
 
             const data2 = await response.data;
-            console.log("data2", data2);
 
             if (data2.data) {
                 data2.data.forEach(item => {
                     item.answers.slice(0, -1).forEach(answer => {
                         //si la no es un numero entre 0 y 5 no pushear
+                        console.log("answer", answer.answer);
+                        const answerValue = parseFloat(answer.answer.replace(/\s+/g, ''));
 
-                        if (answer.answer >= 0 && answer.answer <= 5) {
+                        if (answerValue >= 0 && answerValue <= 5) {
+
                             notas.push(answer.answer);
                         }
                         else {
@@ -345,8 +348,12 @@ async function recoverySurveyInfoPre(data) {
                 });
 
                 notasFinales = notas.map(nota => nota.charAt(0));
+                console.log("notasFinales", notasFinales);
                 notamedia = notasFinales.reduce((acc, nota) => acc + parseInt(nota), 0) / notasFinales.length;
+                console.log("media" + notamedia);
                 notamedia = notamedia.toFixed(2);
+               
+
                 recoverySurveyInfoPreData.push({ id: data[i].id, media: notamedia });
 
             }

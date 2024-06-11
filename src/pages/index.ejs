@@ -16,11 +16,15 @@
         </div>
         <div class="header">
             <h1>MEDIA GLOBAL</h1>
-            <div id="averageScore"></div>
+            <img id="loading" src="./assets/Loading_2.gif" />
+
+            <div id="averageScore">
+            </div>
         </div>
 
         <h1>MEDIA CATEGORÍAS</h1>
         <div class="topContainer">
+            <img id="loading2" src="./assets/Loading_2.gif" />
         </div>
         <div id="categoriesContainer">
 
@@ -45,25 +49,30 @@
     </div>
     </div>
 
-    <script src="averageGlobal.js"></script>
-    <script src="averageCategories.js"></script>
-    <script src="averageCourses.js"></script>
+
     <script>
         var variableDesdeEJS = JSON.parse('<%-JSON.stringify(answersObject)%>');
-        var variableDesdeEJS2 = JSON.parse('<%-JSON.stringify(courseList)%>');
+        //var variableDesdeEJS2 = JSON.parse('<%-JSON.stringify(courseList)%>');
         var variableDesdeEJS3 = JSON.parse('<%-JSON.stringify(courseCategoriesArray)%>');
         var variableDesdeEJS4 = JSON.parse('<%-JSON.stringify(coursesInfo)%>');
         var variableDesdeEJS5 = JSON.parse('<%-JSON.stringify(recoverySurveyInfoPreData)%>');
 
+        console.log("Hola", variableDesdeEJS5);
+
         localStorage.setItem('answersObject', JSON.stringify(variableDesdeEJS));
-        localStorage.setItem('courseList', JSON.stringify(variableDesdeEJS2));
+        //localStorage.setItem('courseList', JSON.stringify(variableDesdeEJS2));
         localStorage.setItem('courseCategoriesArray', JSON.stringify(variableDesdeEJS3));
         localStorage.setItem('courNamesArray', JSON.stringify(variableDesdeEJS4));
         localStorage.setItem('recoverySurveyInfoPreData', JSON.stringify(variableDesdeEJS5));
 
-        console.log(variableDesdeEJS5);
+
+        let variablePrueba = localStorage.getItem('recoverySurveyInfoPreData');
+        console.log("variablePrueba", variablePrueba);
 
     </script>
+        <script src="averageGlobal.js"></script>
+        <script src="averageCategories.js"></script>
+        <script src="averageCourses.js"></script>
 </body>
 
 </html>
