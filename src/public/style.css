@@ -281,3 +281,8 @@ body {
     color: #333;
     text-transform: uppercase;
 }
+
+#loading, #loading2 {
+    width: 150px;
+    height: 150px;
+}
