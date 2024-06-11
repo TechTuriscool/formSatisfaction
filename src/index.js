@@ -309,6 +309,7 @@ async function start() {
     await filterCoursesByCategory();
     const categoryUnitsMap = createObjectWithCategoriesAndUnitIds();
     await recoverySurveyInfoByCategory();
+    console.log(answersObject)
 
 }
 

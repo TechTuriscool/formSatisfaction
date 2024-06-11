@@ -498,7 +498,8 @@ async function start() {
     setLoadingMenuIcon(true);
     await fetchCourseMeta();
     await getAllCourseIds();
-    await populateCategoryMenu();
+    
+    populateCategoryMenu();
 }
 
 async function getAllCourseIds() {
@@ -519,7 +520,7 @@ async function getAllCourseIds() {
 }
 
 function populateCategoryMenu() {
-    console.log(categories);
+    console.log("categories",categories);
     let categoryCardsContainer = document.querySelector('#categoryCards');
     let option = document.createElement('option');
     option.textContent = 'Filtrar por categoria';
