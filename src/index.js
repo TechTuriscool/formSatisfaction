@@ -352,7 +352,7 @@ async function recoverySurveyInfoPre(data) {
                 notamedia = notasFinales.reduce((acc, nota) => acc + parseInt(nota), 0) / notasFinales.length;
                 console.log("media" + notamedia);
                 notamedia = notamedia.toFixed(2);
-               
+
 
                 recoverySurveyInfoPreData.push({ id: data[i].id, media: notamedia });
 

@@ -18,7 +18,7 @@ if (answersObject2 && categoriesContainer2) {
         let categoryScore = document.createElement('h1');
         categoryScore.innerHTML = answersObject2[key].toFixed(2);
         //si es NaN o null, convertirlo a 5
-        
+
 
         categoryContainer.appendChild(categoryScore);
 
@@ -36,6 +36,10 @@ if (answersObject2 && categoriesContainer2) {
         }
 
         imgLoading2.style.display = 'none';
+
+        categoryContainer.addEventListener('click', function () {
+            console.log(key.toUpperCase);
+        });
 
         categoriesContainer2.appendChild(categoryContainer);
     }
