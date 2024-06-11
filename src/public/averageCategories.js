@@ -16,21 +16,18 @@ if (answersObject2 && categoriesContainer2) {
         categoryContainer.appendChild(categoryName);
 
         let categoryScore = document.createElement('h1');
-        categoryScore.innerHTML = answersObject2[key].toFixed(2);
-        //si es NaN o null, convertirlo a 5
-
+        let scoreValue = answersObject2[key] ? answersObject2[key].toFixed(2) : 5;
+        categoryScore.innerHTML = scoreValue;
 
         categoryContainer.appendChild(categoryScore);
 
-        if (categoryScore.innerHTML >= 0 && categoryScore.innerHTML <= 3) {
+        if (scoreValue >= 0 && scoreValue <= 3) {
             categoryContainer.style.backgroundColor = '#F79394';
             categoryContainer.style.color = '#C60001';
-        }
-        if (categoryScore.innerHTML > 3 && categoryScore.innerHTML <= 4) {
+        } else if (scoreValue > 3 && scoreValue <= 4) {
             categoryContainer.style.backgroundColor = '#FDF6C4';
             categoryContainer.style.color = '#F74B00';
-        }
-        if (categoryScore.innerHTML > 4 && categoryScore.innerHTML <= 5) {
+        } else if (scoreValue > 4 && scoreValue <= 5) {
             categoryContainer.style.backgroundColor = '#8BE68B';
             categoryContainer.style.color = '#012E1F';
         }
@@ -38,9 +35,18 @@ if (answersObject2 && categoriesContainer2) {
         imgLoading2.style.display = 'none';
 
         categoryContainer.addEventListener('click', function () {
-            console.log(key.toUpperCase);
+            filterCoursesByCategory(key);
         });
 
         categoriesContainer2.appendChild(categoryContainer);
     }
+}
+
+function filterCoursesByCategory(category) {
+    let categoryCardsContainer = document.querySelector('#categoryCards');
+    categoryCardsContainer.value = category;
+    let event = new Event('change');
+    categoryCardsContainer.dispatchEvent(event);
+    // Mover el scroll hacia la ubicación de categoryCardsContainer y darle una transición suave
+    categoryCardsContainer.scrollIntoView({ behavior: 'smooth' });
 }

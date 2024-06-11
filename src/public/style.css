@@ -253,10 +253,17 @@ body {
     border: 2px solid rgba(0, 0, 0, 0.1);
 }
 
-
+.categoryContainer {
+    transition: 0.3s;
+}
 
 .categoryContainer h1 {
     color: #333;
+}
+
+.categoryContainer:hover {
+    cursor: pointer;
+    scale: 1.05;
 }
 
 #averageScore {
