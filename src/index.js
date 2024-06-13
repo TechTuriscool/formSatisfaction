@@ -22,7 +22,7 @@ app.set('views', path.join(__dirname, 'pages'));
 // Rutas
 app.get("/", (req, res) => res.sendFile(__dirname + "/pages/index.html"));
 //app.get("/averageCourses", (req, res) => res.sendFile(__dirname + "/pages/averageCourses.html"));
-//app.get("/courses", (req, res) => res.sendFile(__dirname + "/pages/course.html"));
+app.get("/courses", (req, res) => res.sendFile(__dirname + "/pages/course.html"));
 
 const token = "Bearer 17xa7adwlycG4qrbRatBdCHW41xtl9jNyaBq4d45";
 const id = "62b182eea31d8d9863079f42";
