@@ -293,3 +293,32 @@ body {
     width: 150px;
     height: 150px;
 }
+
+.menu-button {
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    margin: 10px;
+    background-color: #006791;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    border-radius: 10px;
+    transition: 0.4s;
+    width: 200px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: bold;
+    height: 50px;
+}	
+
+.menu-button:hover {
+    background-color: #05BFAD;
+    transition: 0.4s;
+    scale: 1.1;
+}
+
+.secundaryContainer {
+    margin-top: 10%;
+}

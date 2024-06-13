@@ -241,7 +241,7 @@ function recoverySurveyInfoFromLocalStorage() {
         if (notamedia >= 4) {
             notaGlobalDiv.style.color = "green";
             notaGlobalDiv.style.backgroundColor = "lightgreen";
-        } else if (notamedia >= 2 && notamedia < 4) {
+        } else if (notamedia >= 2 && notamedia <= 3.99) {
             notaGlobalDiv.style.color = "orange";
             notaGlobalDiv.style.backgroundColor = "lightyellow";
         } else if (notamedia < 2) {
