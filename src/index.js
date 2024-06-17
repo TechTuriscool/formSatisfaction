@@ -1,12 +1,12 @@
-import cron from 'node-cron';
 import axios from 'axios';
 import express from 'express';
 import path from 'path';
 import { fileURLToPath } from 'url';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
+app.use(bodyParser.json({ type: "*/*" }));
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
 
 app.listen(port, () => {
     console.log(`App running`);
@@ -18,6 +18,15 @@ app.use(express.json());
 
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'pages'));
+
+//cloud scheduler
+
+app.post("/", (req, res) => {
+    const minBalance = parseFloat(req.body.minBalance) || 0;
+    console.log(`minBalance", ${minBalance}`);
+    resetService(minBalance);
+    res.status(200).send();
+});
 
 // Rutas
 app.get("/", (req, res) => res.sendFile(__dirname + "/pages/index.html"));
