@@ -4,7 +4,6 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-app.use(bodyParser.json({ type: "*/*" }));
 const app = express();
 const port = process.env.PORT || 3000;
 
@@ -21,12 +20,7 @@ app.set('views', path.join(__dirname, 'pages'));
 
 //cloud scheduler
 
-app.post("/", (req, res) => {
-    const minBalance = parseFloat(req.body.minBalance) || 0;
-    console.log(`minBalance", ${minBalance}`);
-    resetService(minBalance);
-    res.status(200).send();
-});
+
 
 // Rutas
 app.get("/", (req, res) => res.sendFile(__dirname + "/pages/index.html"));
