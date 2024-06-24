@@ -18,6 +18,16 @@ app.use(express.json());
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'pages'));
 
+// Reinciciar llamando a la función start otra vez
+app.post("/reset-averages", async (req, res) => {
+    try {
+        await start();
+        res.status(200).send("Medias reiniciadas");
+    } catch (error) {
+        res.status(500).send("Error al reiniciar las medias");
+    }
+});
+
 //cloud scheduler
 
 
@@ -309,6 +319,24 @@ async function recoverySurveyInfoByCategory() {
 }
 
 async function start() {
+    // Limpiar todos los arrays y variables
+    answersObject = {};
+    courseList = [];
+    totalCourses = 0;
+    actualCourseId = 0;
+    courseData = [];
+    coursesInfo = [];
+    courNamesArray = [];
+    courseCategoriesArray = [];
+    courseIdsArray = [];
+    filteredCourseList = [];
+    courseListCategories = [];
+    arrayOfCoursesWithForms = [];
+    surveyIds = [];
+    coursesWithForms = [];
+    generalAverage = 10;
+    recoverySurveyInfoPreData = [];
+
     await fetchCourseMeta();
     await filterCoursesByCategory();
     const categoryUnitsMap = createObjectWithCategoriesAndUnitIds();
