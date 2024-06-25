@@ -112,23 +112,23 @@
         // Cuando el usuario pulsa el botón de confirmar, se cierra el modal y se muestra un mensaje de alerta
         confirmButton.onclick = async function() {
             modal.style.display = "none";
+            // Limpiamos el local storage
+            localStorage.removeItem('answersObject');
+            localStorage.removeItem('courseList');
+            localStorage.removeItem('courseCategoriesArray');
+            localStorage.removeItem('courNamesArray');
+            localStorage.removeItem('recoverySurveyInfoPreData');
+
+            alert('Reiniciando, por favor no cierre ni actualice la página.');
+
             try {
                 const response = await fetch('/reset-averages', {
                     method: 'POST'
                 });
                 if (response.ok) {
-                    // Limpiamos el local storage
-                    localStorage.removeItem('answersObject');
-                    localStorage.removeItem('courseList');
-                    localStorage.removeItem('courseCategoriesArray');
-                    localStorage.removeItem('courNamesArray');
-                    localStorage.removeItem('recoverySurveyInfoPreData');
-                
-                    alert('Las medias se están reiniciando. Por favor, espere.');
+                    alert('Las medias se han reiniciado con éxito.');
                     window.location.reload();
-                } else {
-                    alert('Hubo un problema al reiniciar las medias.');
-                }
+                } 
             } catch (error) {
                 console.error('Error:', error);
                 alert('Hubo un problema al reiniciar las medias.');

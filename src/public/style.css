@@ -333,13 +333,9 @@ body {
     vertical-align: middle;
 }
 
-
-#averageReload img:hover {
-    cursor: pointer;
-}
-
 #averageReload:hover {
     scale: 1.1;
+    cursor: pointer;
 }
 
 #averageReload {
