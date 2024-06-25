@@ -50,6 +50,8 @@ if (answersObject2 && categoriesContainer2) {
         // Simular evento de click en la propia categoria 
         let event = new Event('change');
         document.getElementById('categoryCards').dispatchEvent(event);
+        
+        // Hacer scroll hacia abajo
+        categoryCard.scrollIntoView({ behavior: 'smooth' });
     }
 }
-

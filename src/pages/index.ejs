@@ -48,9 +48,13 @@
         </div>
     </div>
     
+    <div id="containerReload">
         <button id="averageReload">
             <img src="https://cdn-icons-png.flaticon.com/512/2499/2499113.png">
         </button>
+        <h4>Refresh</h4>
+    </div>
+
 
         <div id="confirmationModal" class="modal">
             <div class="modal-content">
@@ -89,13 +93,13 @@
         console.log("variablePrueba", variablePrueba);
 
         var modal = document.getElementById("confirmationModal");
-        var btn = document.getElementById("averageReload");
+        var container = document.getElementById("containerReload");
         var span = document.getElementsByClassName("close")[0];
         var confirmButton = document.getElementById("confirmButton");
         var cancelButton = document.getElementById("cancelButton");
 
         // Cunado se pulsa el botón de recargar, se muestra el modal
-        btn.onclick = function() {
+        container.onclick = function() {
             modal.style.display = "block";
         }
 

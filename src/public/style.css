@@ -333,21 +333,37 @@ body {
     vertical-align: middle;
 }
 
-#averageReload:hover {
+#containerReload:hover {
     scale: 1.1;
     cursor: pointer;
 }
 
 #averageReload {
     background-color: #cacaca;
-    position: fixed;
-    top: 5px;
-    right: 5px;
     width: 50px;
     height: 50px;    
     border: 0px;
-    border-radius: 10px;
+    border-radius: 5px;
     transition: 0.3s;
+}
+
+#containerReload h4{
+    justify-content: center;
+    text-align: center;
+    margin: auto;
+}
+
+#containerReload {
+    background-color: #dedede;
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    min-width: 150px;
+    height: 50px;    
+    border: 0px;
+    border-radius: 5px;
+    transition: 0.3s;
+    display: flex;
 }
 
 .modal {
